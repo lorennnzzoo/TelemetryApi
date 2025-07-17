@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TelemtryApi.Controllers
+namespace TelemetryApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
