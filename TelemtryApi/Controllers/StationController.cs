@@ -7,31 +7,36 @@ namespace TelemtryApi.Controllers
     [ApiController]
     public class StationController : ControllerBase
     {
-        [Route("create")]
+        [HttpPost]
+        [Route("createStation")]
         public IActionResult Create()
         {
             return Ok();
         }
 
-        [Route("update")]
+        [HttpPut]
+        [Route("updateStation")]
         public IActionResult Update()
         {
             return Ok();
         }
 
-        [Route("delete")]
+        [HttpDelete]
+        [Route("deleteStation")]
         public IActionResult Delete(int id)
         {
             return Ok();
         }
 
-        [Route("getall")]
+        [HttpGet]
+        [Route("getallStation")]
         public IActionResult GetAll()
         {
             return Ok();
         }
 
-        [Route("get")]
+        [HttpGet]
+        [Route("getStation")]
         public IActionResult Get(int id)
         {
             return Ok();

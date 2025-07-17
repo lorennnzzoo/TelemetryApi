@@ -7,31 +7,36 @@ namespace TelemtryApi.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        [Route("create")]
+        [HttpPost]
+        [Route("createCompany")]
         public IActionResult Create()
         {
             return Ok();
         }
 
-        [Route("update")]
+        [HttpPut]
+        [Route("updateCompany")]
         public IActionResult Update()
         {
             return Ok();
         }
 
-        [Route("delete")]
+        [HttpDelete]
+        [Route("deleteCompany")]
         public IActionResult Delete(int id)
         {
             return Ok();
         }
 
-        [Route("getall")]
+        [HttpGet]
+        [Route("getallCompanies")]
         public IActionResult GetAll()
         {
             return Ok();
         }
 
-        [Route("get")]
+        [HttpGet]
+        [Route("getCompany")]
         public IActionResult Get(int id)
         {
             return Ok();

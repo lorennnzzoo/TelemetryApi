@@ -5,33 +5,38 @@ namespace TelemtryApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChannelController : ControllerBase
+    public class SensorController : ControllerBase
     {
-        [Route("create")]
+        [HttpPost]
+        [Route("createSensor")]
         public IActionResult Create()
         {
             return Ok();
         }
 
-        [Route("update")]
+        [HttpPut]
+        [Route("updateSensor")]
         public IActionResult Update()
         {
             return Ok();
         }
 
-        [Route("delete")]
+        [HttpDelete]
+        [Route("deleteSensor")]
         public IActionResult Delete(int id)
         {
             return Ok();
         }
 
-        [Route("getall")]
+        [HttpGet]
+        [Route("getallSensor")]
         public IActionResult GetAll()
         {
             return Ok();
         }
 
-        [Route("get")]
+        [HttpGet]
+        [Route("getSensor")]
         public IActionResult Get(int id)
         {
             return Ok();
