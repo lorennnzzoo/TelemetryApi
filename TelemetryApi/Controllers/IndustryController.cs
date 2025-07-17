@@ -5,38 +5,38 @@ namespace TelemtryApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController : ControllerBase
+    public class IndustryController : ControllerBase
     {
         [HttpPost]
-        [Route("createCompany")]
+        [Route("createIndustry")]
         public IActionResult Create()
         {
             return Ok();
         }
 
         [HttpPut]
-        [Route("updateCompany")]
+        [Route("updateIndustry")]
         public IActionResult Update()
         {
             return Ok();
         }
 
         [HttpDelete]
-        [Route("deleteCompany")]
+        [Route("deleteIndustry")]
         public IActionResult Delete(int id)
         {
             return Ok();
         }
 
         [HttpGet]
-        [Route("getallCompanies")]
+        [Route("getallIndustry")]
         public IActionResult GetAll()
         {
             return Ok();
         }
 
         [HttpGet]
-        [Route("getCompany")]
+        [Route("getIndustry")]
         public IActionResult Get(int id)
         {
             return Ok();
