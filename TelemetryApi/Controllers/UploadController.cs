@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Telemetry.Repositories.Interfaces;
 
 namespace TelemetryApi.Controllers
 {
@@ -7,8 +8,14 @@ namespace TelemetryApi.Controllers
     [ApiController]
     public class UploadController : ControllerBase
     {
+        private readonly IKeyRepository repository;
+        public UploadController(IKeyRepository _repository)
+        {
+            repository = _repository;
+        }
         [HttpPost]
         [Route("liveUpload")]
+        [RequireAuthKey]
         public IActionResult Live()
         {
             return Ok();
@@ -16,6 +23,7 @@ namespace TelemetryApi.Controllers
 
         [HttpPost]
         [Route("delayUpload")]
+        [RequireAuthKey]
         public IActionResult Delay()
         {
             return Ok();

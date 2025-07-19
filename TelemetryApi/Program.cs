@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Telemetry.Data.Models;
 using Telemetry.Repositories;
 using Telemetry.Repositories.Interfaces;
+using TelemetryApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.OperationFilter<AddAuthTokenHeaderOperationFilter>();
+});
+
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
     {
@@ -24,6 +29,7 @@ builder.Services.AddDbContext<Telemetry.Data.Models.TelemetryapiContext>(options
 builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IStationRepository, StationRepository>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
+builder.Services.AddScoped<IKeyRepository, KeyRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
