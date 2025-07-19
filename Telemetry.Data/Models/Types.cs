@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Telemetry.Data.Models
 {
-    public enum IndustryCategory
+    public enum IndustryCategories
     {
         Red,
         Orange,
@@ -14,22 +14,23 @@ namespace Telemetry.Data.Models
         White
     }
 
-    public enum MonitoringType
+    public enum MonitoringTypes
     {
         Ambient,
-        CAAQMS,
+        Caaqms,
         Air,
         Water,
         Noise,
-        GroundWater,
+        Groundwater,
         Effluent,
         Emission,
-        ETP,
-        STP,
-        SWM,
+        Etp,
+        Stp,
+        Swm,
         Hazardous,
         Weather,
         Odour
     }
+
 
 }

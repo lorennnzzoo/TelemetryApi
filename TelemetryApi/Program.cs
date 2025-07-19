@@ -1,5 +1,6 @@
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using Telemetry.Data.Models;
 using Telemetry.Repositories;
 using Telemetry.Repositories.Interfaces;
@@ -12,12 +13,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
-builder.Services.AddDbContext<Telemetry.Data.Models.TelemetryapiContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("telemetryApi"), npgsqlOptions =>
-{
-    npgsqlOptions.MapEnum<IndustryCategory>();
-    npgsqlOptions.MapEnum<MonitoringType>();
-}));
+builder.Services.AddDbContext<Telemetry.Data.Models.TelemetryapiContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("telemetryApi")));
 
 builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IStationRepository, StationRepository>();

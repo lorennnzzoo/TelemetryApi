@@ -26,11 +26,15 @@ namespace Telemetry.Repositories
 
         public void delete(int id)
         {
-            Sensor sensor = context.Sensors.Where(e => e.Id == id).FirstOrDefault();
-            if (sensor != null)
-                context.Remove(sensor);
+            var sensor = context.Sensors.FirstOrDefault(s => s.Id == id);
+
+            if (sensor == null)
+                throw new InvalidOperationException("Sensor not found.");
+
+            context.Sensors.Remove(sensor);
             context.SaveChanges();
         }
+
 
         public Sensor get(int id)
         {

@@ -20,7 +20,7 @@ namespace Telemetry.Data.Dtos
         public string ContactEmail { get; set; } = null!;
 
         public string Address { get; set; } = null!;
-        public IndustryCategory Category { get; set; }
+        public IndustryCategories Category { get; set; }
 
         public Industry CreateModel()
         {
@@ -32,7 +32,7 @@ namespace Telemetry.Data.Dtos
                 ContactPhone = this.ContactPhone,
                 ContactEmail = this.ContactEmail,
                 Address = this.Address,
-                Category = this.Category
+                Category = this.Category.ToString()
             };
         }
         public void UpdateModel(Industry industry)
@@ -42,7 +42,7 @@ namespace Telemetry.Data.Dtos
             industry.ContactPhone = this.ContactPhone;
             industry.ContactEmail = this.ContactEmail;
             industry.Address = this.Address;
-            industry.Category = this.Category;
+            industry.Category = this.Category.ToString();
         }
 
     }

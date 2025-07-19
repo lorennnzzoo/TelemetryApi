@@ -15,23 +15,30 @@ public partial class TelemetryapiContext : DbContext
     {
     }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Industry> Industries { get; set; }
+
+    public virtual DbSet<MonitoringType> MonitoringTypes { get; set; }
 
     public virtual DbSet<Sensor> Sensors { get; set; }
 
     public virtual DbSet<Station> Stations { get; set; }
 
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=192.168.123.72;Database=telemetryapi;Username=lorenzo;Password=lorenzo");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder
-        //    .HasPostgresEnum("industry_category", new[] { "Red", "Orange", "Green", "White" })
-        //    .HasPostgresEnum("monitoring_type", new[] { "Ambient", "CAAQMS", "Air", "Water", "Noise", "GroundWater", "Effluent", "Emission", "ETP", "STP", "SWM", "Hazardous", "Weather", "Odour" });
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.Category1).HasName("categories_pkey");
 
+            entity.ToTable("categories");
 
-        modelBuilder.HasPostgresEnum<IndustryCategory>();
-        modelBuilder.HasPostgresEnum<MonitoringType>();
+            entity.Property(e => e.Category1).HasColumnName("category");
+        });
 
         modelBuilder.Entity<Industry>(entity =>
         {
@@ -43,13 +50,25 @@ public partial class TelemetryapiContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
             entity.Property(e => e.Address).HasColumnName("address");
+            entity.Property(e => e.Category).HasColumnName("category");
             entity.Property(e => e.ContactEmail).HasColumnName("contact_email");
             entity.Property(e => e.ContactPerson).HasColumnName("contact_person");
             entity.Property(e => e.ContactPhone).HasColumnName("contact_phone");
             entity.Property(e => e.Name).HasColumnName("name");
-            entity.Property(e => e.Category)
-        .HasColumnName("category");
 
+            entity.HasOne(d => d.CategoryNavigation).WithMany(p => p.Industries)
+                .HasForeignKey(d => d.Category)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("industry_categoriesfkey");
+        });
+
+        modelBuilder.Entity<MonitoringType>(entity =>
+        {
+            entity.HasKey(e => e.MonitoringType1).HasName("monitoring_types_pkey");
+
+            entity.ToTable("monitoring_types");
+
+            entity.Property(e => e.MonitoringType1).HasColumnName("monitoring_type");
         });
 
         modelBuilder.Entity<Sensor>(entity =>
@@ -66,13 +85,11 @@ public partial class TelemetryapiContext : DbContext
             entity.Property(e => e.MeasuringUnit).HasColumnName("measuring_unit");
             entity.Property(e => e.MonitoringId).HasColumnName("monitoring_id");
             entity.Property(e => e.Name).HasColumnName("name");
-
             entity.Property(e => e.StationId).HasColumnName("station_id");
 
-            entity.HasOne(e => e.Station)
-                .WithMany() // or .WithMany(i => i.Stations) if you add `public ICollection<Station> Stations` in `Industry`
-                .HasForeignKey(e => e.StationId)
-                .OnDelete(DeleteBehavior.NoAction)
+            entity.HasOne(d => d.Station).WithMany(p => p.Sensors)
+                .HasForeignKey(d => d.StationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("station_sensorfkey");
         });
 
@@ -88,20 +105,20 @@ public partial class TelemetryapiContext : DbContext
             entity.Property(e => e.ContactEmail).HasColumnName("contact_email");
             entity.Property(e => e.ContactPerson).HasColumnName("contact_person");
             entity.Property(e => e.ContactPhone).HasColumnName("contact_phone");
-            entity.Property(e => e.Location).HasColumnName("location");
-            entity.Property(e => e.Name).HasColumnName("name");
-            entity.Property(e => e.MonitoringType)
-     .HasColumnName("monitoring_type");
-
             entity.Property(e => e.IndustryId).HasColumnName("industry_id");
+            entity.Property(e => e.Location).HasColumnName("location");
+            entity.Property(e => e.MonitoringType).HasColumnName("monitoring_type");
+            entity.Property(e => e.Name).HasColumnName("name");
 
-            entity.HasOne(e => e.Industry)
-                .WithMany() // or .WithMany(i => i.Stations) if you add `public ICollection<Station> Stations` in `Industry`
-                .HasForeignKey(e => e.IndustryId)
-                .OnDelete(DeleteBehavior.NoAction)
+            entity.HasOne(d => d.Industry).WithMany(p => p.Stations)
+                .HasForeignKey(d => d.IndustryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("station_industryfkey");
 
-
+            entity.HasOne(d => d.MonitoringTypeNavigation).WithMany(p => p.Stations)
+                .HasForeignKey(d => d.MonitoringType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("station_monitoring_typesfkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

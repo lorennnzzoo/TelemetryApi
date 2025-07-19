@@ -25,9 +25,17 @@ namespace Telemetry.Repositories
 
         public void delete(int id)
         {
-            Industry industry = context.Industries.Where(e => e.Id == id).FirstOrDefault();
-            if (industry != null)
-                context.Remove(industry);
+            var industry = context.Industries
+                .Include(i => i.Stations)
+                .FirstOrDefault(i => i.Id == id);
+
+            if (industry == null)
+                throw new InvalidOperationException("Industry not found.");
+
+            if (industry.Stations.Any())
+                throw new InvalidOperationException("Cannot delete industry: it has linked stations.");
+
+            context.Industries.Remove(industry);
             context.SaveChanges();
         }
 

@@ -40,12 +40,15 @@ namespace TelemetryApi.Controllers
         [Route("deleteStation")]
         public IActionResult Delete(int id)
         {
-            var existing = repository.get(id);
-            if (existing == null)
-                return NotFound();
-
-            repository.delete(id);
-            return NoContent();
+            try
+            {
+                repository.delete(id);
+                return Ok("Station deletion successfull.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

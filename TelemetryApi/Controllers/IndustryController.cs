@@ -16,7 +16,7 @@ namespace TelemetryApi.Controllers
         }
         [HttpPost]
         [Route("createIndustry")]
-        public IActionResult Create([FromBody] IndustryDto dto)
+        public IActionResult Create(IndustryDto dto)
         {            
             repository.create(dto);
             return CreatedAtAction(nameof(Get), new { id = dto.Id }, dto);
@@ -24,7 +24,7 @@ namespace TelemetryApi.Controllers
 
         [HttpPut]
         [Route("updateIndustry")]
-        public IActionResult Update([FromBody] IndustryDto dto)
+        public IActionResult Update(IndustryDto dto)
         {
             var existing = repository.get(dto.Id);
             if (existing == null)
@@ -39,12 +39,15 @@ namespace TelemetryApi.Controllers
         [Route("deleteIndustry")]
         public IActionResult Delete(int id)
         {
-            var existing = repository.get(id);
-            if (existing == null)
-                return NotFound();
-
-            repository.delete(id);
-            return NoContent();
+            try
+            {
+                repository.delete(id);
+                return Ok("Industry deletion successfull.");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

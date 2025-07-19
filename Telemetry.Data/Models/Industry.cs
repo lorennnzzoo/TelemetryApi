@@ -17,7 +17,10 @@ public partial class Industry
     public string ContactEmail { get; set; } = null!;
 
     public string Address { get; set; } = null!;
-    public IndustryCategory Category { get; set; }
-    public ICollection<Station> Stations { get; set; } = new List<Station>();
 
+    public string Category { get; set; } = null!;
+    [JsonIgnore]
+    public virtual Category CategoryNavigation { get; set; } = null!;
+    [JsonIgnore]
+    public virtual ICollection<Station> Stations { get; set; } = new List<Station>();
 }

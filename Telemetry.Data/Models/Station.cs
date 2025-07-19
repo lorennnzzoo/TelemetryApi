@@ -17,11 +17,14 @@ public partial class Station
     public string ContactPhone { get; set; } = null!;
 
     public string ContactEmail { get; set; } = null!;
-    public MonitoringType MonitoringType { get; set; }
+
     public int IndustryId { get; set; }
-    
+
+    public string MonitoringType { get; set; } = null!;
+    [JsonIgnore]
     public virtual Industry Industry { get; set; } = null!;
-
-    public  ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
-
+    [JsonIgnore]
+    public virtual MonitoringType MonitoringTypeNavigation { get; set; } = null!;
+    [JsonIgnore]
+    public virtual ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
 }

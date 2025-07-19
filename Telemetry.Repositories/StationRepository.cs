@@ -25,11 +25,20 @@ namespace Telemetry.Repositories
 
         public void delete(int id)
         {
-            Station station = context.Stations.Where(e => e.Id == id).FirstOrDefault();
-            if (station != null)
-                context.Remove(station);
+            var station = context.Stations
+                .Include(s => s.Sensors)
+                .FirstOrDefault(s => s.Id == id);
+
+            if (station == null)
+                throw new InvalidOperationException("Station not found.");
+
+            if (station.Sensors.Any())
+                throw new InvalidOperationException("Cannot delete station: it has linked sensors.");
+
+            context.Stations.Remove(station);
             context.SaveChanges();
         }
+
 
         public Station get(int id)
         {

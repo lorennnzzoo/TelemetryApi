@@ -20,7 +20,7 @@ namespace Telemetry.Data.Dtos
         public string ContactPhone { get; set; } = null!;
 
         public string ContactEmail { get; set; } = null!;
-        public MonitoringType MonitoringType { get; set; }
+        public MonitoringTypes MonitoringType { get; set; }
         public int IndustryId { get; set; }
 
         public Station CreateModel()
@@ -33,7 +33,7 @@ namespace Telemetry.Data.Dtos
                 ContactPerson = this.ContactPerson,
                 ContactPhone = this.ContactPhone,
                 ContactEmail = this.ContactEmail,
-                MonitoringType = this.MonitoringType,
+                MonitoringType = this.MonitoringType.ToString(),
                 IndustryId = this.IndustryId
             };
         }
@@ -44,7 +44,7 @@ namespace Telemetry.Data.Dtos
             station.ContactPerson = this.ContactPerson;
             station.ContactPhone = this.ContactPhone;
             station.ContactEmail = this.ContactEmail;
-            station.MonitoringType = this.MonitoringType;
+            station.MonitoringType = this.MonitoringType.ToString();
             station.IndustryId = this.IndustryId;
         }
 
