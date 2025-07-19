@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Telemetry.Business\Telemetry.Business.csproj" />
     <ProjectReference Include="..\Telemetry.Data\Telemetry.Data.csproj" />
   </ItemGroup>
 

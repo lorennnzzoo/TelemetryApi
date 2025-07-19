@@ -19,6 +19,8 @@ public partial class TelemetryapiContext : DbContext
 
     public virtual DbSet<Industry> Industries { get; set; }
 
+    public virtual DbSet<Key> Keys { get; set; }
+
     public virtual DbSet<MonitoringType> MonitoringTypes { get; set; }
 
     public virtual DbSet<Sensor> Sensors { get; set; }
@@ -60,6 +62,20 @@ public partial class TelemetryapiContext : DbContext
                 .HasForeignKey(d => d.Category)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("industry_categoriesfkey");
+        });
+
+        modelBuilder.Entity<Key>(entity =>
+        {
+            entity.HasKey(e => e.AuthKey).HasName("keys_pkey");
+
+            entity.ToTable("keys");
+
+            entity.Property(e => e.AuthKey).HasColumnName("auth_key");
+            entity.Property(e => e.IndustryId).HasColumnName("industry_id");
+
+            entity.HasOne(d => d.Industry).WithMany(p => p.Keys)
+                .HasForeignKey(d => d.IndustryId)
+                .HasConstraintName("keys_industryfkey");
         });
 
         modelBuilder.Entity<MonitoringType>(entity =>

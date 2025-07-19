@@ -22,5 +22,7 @@ public partial class Industry
     [JsonIgnore]
     public virtual Category CategoryNavigation { get; set; } = null!;
     [JsonIgnore]
+    public virtual ICollection<Key> Keys { get; set; } = new List<Key>();
+    [JsonIgnore]
     public virtual ICollection<Station> Stations { get; set; } = new List<Station>();
 }

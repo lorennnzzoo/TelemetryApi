@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telemetry.Business;
 using Telemetry.Data.Dtos;
 using Telemetry.Data.Models;
 using Telemetry.Repositories.Interfaces;
@@ -19,7 +20,23 @@ namespace Telemetry.Repositories
         }
         public void create(IndustryDto industry)
         {
-            context.Industries.Add(industry.CreateModel());
+            
+            var industryraw = industry.CreateModel();
+
+            
+            context.Industries.Add(industryraw);
+            context.SaveChanges(); 
+
+            
+            string rawKey = Guid.NewGuid().ToString("N");
+            rawKey = Hashing.ComputeSha256Hash(rawKey);
+            Key key = new Key
+            {
+                IndustryId = industryraw.Id,
+                AuthKey = rawKey
+            };
+
+            context.Keys.Add(key);
             context.SaveChanges();
         }
 
