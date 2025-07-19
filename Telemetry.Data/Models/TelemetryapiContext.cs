@@ -72,6 +72,8 @@ public partial class TelemetryapiContext : DbContext
 
             entity.Property(e => e.AuthKey).HasColumnName("auth_key");
             entity.Property(e => e.IndustryId).HasColumnName("industry_id");
+            entity.Property(e => e.PrivateKey).HasColumnName("private_key");
+            entity.Property(e => e.PublicKey).HasColumnName("public_key");
 
             entity.HasOne(d => d.Industry).WithMany(p => p.Keys)
                 .HasForeignKey(d => d.IndustryId)

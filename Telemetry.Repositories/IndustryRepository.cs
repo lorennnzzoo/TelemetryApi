@@ -20,20 +20,26 @@ namespace Telemetry.Repositories
         }
         public void create(IndustryDto industry)
         {
-            
+
             var industryraw = industry.CreateModel();
 
-            
             context.Industries.Add(industryraw);
             context.SaveChanges(); 
 
-            
+           
             string rawKey = Guid.NewGuid().ToString("N");
-            rawKey = Hashing.ComputeSha256Hash(rawKey);
+            string hashedKey = Hashing.ComputeSha256Hash(rawKey);
+
+            
+            var (publicKey, privateKey) = Rsa.RsaKeyGenerator.GenerateRsaKeyPair();
+
+            
             Key key = new Key
             {
                 IndustryId = industryraw.Id,
-                AuthKey = rawKey
+                AuthKey = hashedKey,
+                PublicKey = publicKey,
+                PrivateKey = privateKey
             };
 
             context.Keys.Add(key);
