@@ -4,6 +4,7 @@ using Telemetry.Repositories.Interfaces;
 
 namespace TelemetryApi.Controllers
 {
+    [RequireAuthKey]
     [Route("api/[controller]")]
     [ApiController]
     public class UploadController : ControllerBase

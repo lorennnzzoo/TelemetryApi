@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Telemetry.Data.Dtos;
@@ -7,6 +8,7 @@ using Telemetry.Repositories.Interfaces;
 
 namespace TelemetryApi.Controllers
 {
+    [Authorize(Roles = "PcbAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SensorController : ControllerBase

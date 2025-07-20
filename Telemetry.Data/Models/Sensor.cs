@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace Telemetry.Data.Models;
 
@@ -19,6 +18,6 @@ public partial class Sensor
     public DateOnly InstalledDate { get; set; }
 
     public int StationId { get; set; }
-    [JsonIgnore]
+
     public virtual Station Station { get; set; } = null!;
 }

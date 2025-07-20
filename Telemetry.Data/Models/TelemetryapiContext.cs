@@ -23,9 +23,13 @@ public partial class TelemetryapiContext : DbContext
 
     public virtual DbSet<MonitoringType> MonitoringTypes { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<Sensor> Sensors { get; set; }
 
     public virtual DbSet<Station> Stations { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -89,6 +93,16 @@ public partial class TelemetryapiContext : DbContext
             entity.Property(e => e.MonitoringType1).HasColumnName("monitoring_type");
         });
 
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.Role1).HasName("roles_pkey");
+
+            entity.ToTable("roles");
+
+            entity.Property(e => e.Role1).HasColumnName("role");
+            entity.Property(e => e.Description).HasColumnName("description");
+        });
+
         modelBuilder.Entity<Sensor>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("sensor_pkey");
@@ -137,6 +151,41 @@ public partial class TelemetryapiContext : DbContext
                 .HasForeignKey(d => d.MonitoringType)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("station_monitoring_typesfkey");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("user_pkey");
+
+            entity.ToTable("user");
+
+            entity.HasIndex(e => e.Email, "email_unique").IsUnique();
+
+            entity.HasIndex(e => e.Username, "username_unique").IsUnique();
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.FailedAttempts)
+                .HasDefaultValue(0)
+                .HasColumnName("failed_attempts");
+            entity.Property(e => e.FullName).HasColumnName("full_name");
+            entity.Property(e => e.IndustryId).HasColumnName("industry_id");
+            entity.Property(e => e.LastLogin)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("last_login");
+            entity.Property(e => e.PasswordHash).HasColumnName("password_hash");
+            entity.Property(e => e.Role).HasColumnName("role");
+            entity.Property(e => e.Username).HasColumnName("username");
+
+            entity.HasOne(d => d.Industry).WithMany(p => p.Users)
+                .HasForeignKey(d => d.IndustryId)
+                .HasConstraintName("user_industryidfkey");
+
+            entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Users)
+                .HasForeignKey(d => d.Role)
+                .HasConstraintName("user_rolesfkey");
         });
 
         OnModelCreatingPartial(modelBuilder);

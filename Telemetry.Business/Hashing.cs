@@ -18,6 +18,13 @@ namespace Telemetry.Business
             }
         }
 
+        public static bool Verify(string inputPassword, string storedHash)
+        {
+            var inputHash = ComputeSha256Hash(inputPassword); // implement with salt if possible
+            return inputHash == storedHash;
+        }
+
+
     }
 
 }
