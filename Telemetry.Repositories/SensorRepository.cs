@@ -8,6 +8,7 @@ using Telemetry.Data.Dtos;
 using Telemetry.Data.Models;
 using Telemetry.Repositories.Interfaces;
 using static System.Collections.Specialized.BitVector32;
+using Sensor = Telemetry.Data.Models.Sensor;
 
 namespace Telemetry.Repositories
 {

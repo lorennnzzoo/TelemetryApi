@@ -27,6 +27,8 @@ public partial class TelemetryapiContext : DbContext
 
     public virtual DbSet<Sensor> Sensors { get; set; }
 
+    public virtual DbSet<SensorDatum> SensorData { get; set; }
+
     public virtual DbSet<Station> Stations { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -123,6 +125,22 @@ public partial class TelemetryapiContext : DbContext
                 .HasForeignKey(d => d.StationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("station_sensorfkey");
+        });
+
+        modelBuilder.Entity<SensorDatum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("sensor_data_pkey");
+
+            entity.ToTable("sensor_data");
+
+            entity.HasIndex(e => new { e.SensorId, e.Timestamp }, "idx_sensor_data_sensor_time");
+
+            entity.HasIndex(e => new { e.SensorId, e.Timestamp }, "sensor_data_sensor_id_timestamp_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.SensorId).HasColumnName("sensor_id");
+            entity.Property(e => e.Timestamp).HasColumnName("timestamp");
+            entity.Property(e => e.Value).HasColumnName("value");
         });
 
         modelBuilder.Entity<Station>(entity =>

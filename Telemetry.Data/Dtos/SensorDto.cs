@@ -22,9 +22,9 @@ namespace Telemetry.Data.Dtos
         public DateOnly InstalledDate { get; set; }
 
         public int StationId { get; set; }
-        public Sensor CreateModel()
+        public Telemetry.Data.Models.Sensor CreateModel()
         {
-            return new Sensor
+            return new Telemetry.Data.Models.Sensor
             {
                 Id = this.Id,
                 Name = this.Name,
@@ -36,7 +36,7 @@ namespace Telemetry.Data.Dtos
             };
         }
 
-        public void UpdateModel(Sensor sensor)
+        public void UpdateModel(Telemetry.Data.Models.Sensor sensor)
         {
             sensor.Name = this.Name;
             sensor.Code = this.Code;

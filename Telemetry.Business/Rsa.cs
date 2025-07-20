@@ -22,7 +22,20 @@ namespace Telemetry.Business
                     return (publicKey, privateKey);
                 }
             }
-        }
 
+            
+
+        }
+        public static string DecryptPayload(string base64Encrypted, string base64PrivateKey)
+        {
+            byte[] encryptedBytes = Convert.FromBase64String(base64Encrypted);
+            byte[] privateKeyBytes = Convert.FromBase64String(base64PrivateKey);
+
+            using var rsa = RSA.Create();
+            rsa.ImportPkcs8PrivateKey(privateKeyBytes, out _);
+
+            byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.OaepSHA256);
+            return Encoding.UTF8.GetString(decryptedBytes);
+        }
     }
 }

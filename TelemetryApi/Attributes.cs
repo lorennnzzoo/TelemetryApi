@@ -27,6 +27,7 @@ namespace TelemetryApi
 
             // Store privateKey in HttpContext.Items for later use in controller
             context.HttpContext.Items["PrivateKey"] = privateKey;
+            context.HttpContext.Items["AuthToken"] = tokenValue.ToString();
         }
     }
     

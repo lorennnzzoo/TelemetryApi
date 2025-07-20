@@ -13,7 +13,7 @@ namespace Telemetry.Repositories.Interfaces
         void create(SensorDto sensor);
         void update(SensorDto sensor);
         void delete(int id);
-        List<Sensor> getAll();
-        Sensor get(int id);
+        List<Data.Models.Sensor> getAll();
+        Data.Models.Sensor get(int id);
     }
 }

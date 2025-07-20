@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Telemetry.Data.Dtos;
 using Telemetry.Data.Models;
 using Telemetry.Repositories.Interfaces;
+using Sensor = Telemetry.Data.Models.Sensor;
 
 namespace TelemetryApi.Controllers
 {

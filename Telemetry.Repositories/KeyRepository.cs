@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,5 +27,31 @@ namespace Telemetry.Repositories
                 .FirstOrDefault();
         }
 
+        public Station GetStationRelatedToAuthToken(string authToken,int stationId)
+        {
+            if (string.IsNullOrWhiteSpace(authToken))
+                return null;
+
+            var industry = context.Keys
+                            .Include(k => k.Industry)
+                            .Where(k => k.AuthKey == authToken)
+                            .Select(k => k.Industry)
+                            .FirstOrDefault();
+
+
+            if (industry == null)
+                return null;
+
+            var station = context.Stations
+                .FirstOrDefault(s => s.IndustryId == industry.Id && s.Id == stationId);
+
+            return station;
+        }
+
+
+        public List<Sensor> GetSensorsRelatedToStation(int stationId)
+        {
+            return context.Sensors.Where(e => e.StationId == stationId).ToList();
+        }
     }
 }
