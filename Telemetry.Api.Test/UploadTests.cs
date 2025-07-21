@@ -43,5 +43,36 @@ namespace Telemetry.Api.Test
             Console.WriteLine(response.Content);
             response.EnsureSuccessStatusCode();
         }
+        [Fact]
+        public void DelayUpload()
+        {
+            string endpoint = $"{apiUrl}/api/upload/delayupload";
+
+            StationUploadModel payload = new StationUploadModel
+            {
+                StationId = 2,
+                TimeStamp = DateTime.Now.AddMinutes(-15),
+                Sensors = new List<Sensor>
+                {
+                    new Sensor
+                    {
+                        Id=2,
+                        Value=10
+                    }
+                }
+            };
+            string rawPayload = Newtonsoft.Json.JsonConvert.SerializeObject(payload);
+
+            string encryptedPayload = Telemetry.Business.Rsa.EncryptPayload(rawPayload, publicKey);
+
+
+            var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
+            request.Headers.Add("AuthToken", authToken);
+            request.Content = new StringContent(encryptedPayload, Encoding.UTF8, "text/plain");
+
+            var response = client.SendAsync(request).Result;
+            Console.WriteLine(response.Content);
+            response.EnsureSuccessStatusCode();
+        }
     }
 }
