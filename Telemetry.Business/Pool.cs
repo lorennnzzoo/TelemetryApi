@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,6 +23,34 @@ namespace Telemetry.Business
 
             string serialized = JsonSerializer.Serialize(data);
             File.WriteAllText(filePath, serialized);
+        }
+
+        public static void ProcessPool(string poolFolder,IServiceProvider provider)
+        {
+            string[] files = Directory.GetFiles(poolFolder,"*.dat");
+
+            foreach(string file in files)
+            {
+                var processingFile = Path.ChangeExtension(file, ".processing");
+
+                try
+                {                  
+                    File.Move(file, processingFile);
+                    string fileContent = File.ReadAllText(processingFile);
+                    StationUploadModel sensormodel = JsonSerializer.Deserialize<StationUploadModel>(fileContent);
+                    if (sensormodel == null)
+                        throw new Exception("Invalid model deserialization");
+
+                    using var scope = provider.CreateScope();
+                    var repository = scope.ServiceProvider.GetRequiredService<ISensorDataRepository>();
+                    repository.InsertSensorData(sensormodel);
+                    File.Delete(processingFile);
+                }
+                catch (IOException)
+                {
+                    continue; 
+                }
+            }
         }
     }
 }
