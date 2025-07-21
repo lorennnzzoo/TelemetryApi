@@ -13,9 +13,11 @@ namespace TelemetryApi.Controllers
     public class UploadController : ControllerBase
     {
         private readonly IKeyRepository repository;
-        public UploadController(IKeyRepository _repository)
+        private readonly IConfiguration configuration;
+        public UploadController(IKeyRepository _repository, IConfiguration _configuration)
         {
             repository = _repository;
+            configuration = _configuration;
         }
         [HttpPost]
         [Route("liveUpload")]
@@ -116,6 +118,23 @@ namespace TelemetryApi.Controllers
                 if (sensor.Value == null)
                     return BadRequest($"Sensor with Id {sensor.Id} is missing a value.");
             }
+            //check if appsettings.json has poolfolder set
+            var poolFolder = configuration["PoolFolder"];
+
+            if (string.IsNullOrWhiteSpace(poolFolder))
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal error: PoolFolder is not configured.");
+            }
+            try
+            {
+                Telemetry.Business.Pool.WriteToPool(model, poolFolder);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal error: Unable to write sensordata.");
+            }
+
+
             return Ok($"Live Uploaded {model.TimeStamp} for {model.Sensors.Count} Sensors");
 
 
@@ -222,6 +241,22 @@ namespace TelemetryApi.Controllers
 
                 if (sensor.Value == null)
                     return BadRequest($"Sensor with Id {sensor.Id} is missing a value.");
+            }
+
+            //check if appsettings.json has poolfolder set
+            var poolFolder = configuration["PoolFolder"];
+
+            if (string.IsNullOrWhiteSpace(poolFolder))
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal error: PoolFolder is not configured.");
+            }
+            try
+            {
+                Telemetry.Business.Pool.WriteToPool(model, poolFolder);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal error: Unable to write sensordata.");
             }
             return Ok($"Delay Uploaded {model.TimeStamp} for {model.Sensors.Count} Sensors");
 
