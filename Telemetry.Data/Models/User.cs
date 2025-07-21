@@ -13,7 +13,7 @@ public partial class User
 
     public string PasswordHash { get; set; } = null!;
 
-    public string? Role { get; set; }
+    public string Role { get; set; } = null!;
 
     public string FullName { get; set; } = null!;
 
@@ -25,5 +25,5 @@ public partial class User
 
     public virtual Industry? Industry { get; set; }
 
-    public virtual Role? RoleNavigation { get; set; }
+    public virtual Role RoleNavigation { get; set; } = null!;
 }

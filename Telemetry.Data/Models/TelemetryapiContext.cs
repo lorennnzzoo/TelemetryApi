@@ -203,6 +203,7 @@ public partial class TelemetryapiContext : DbContext
 
             entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Role)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("user_rolesfkey");
         });
 
