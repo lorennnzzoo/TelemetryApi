@@ -37,5 +37,18 @@ namespace Telemetry.Business
             byte[] decryptedBytes = rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.OaepSHA256);
             return Encoding.UTF8.GetString(decryptedBytes);
         }
+
+        public static string EncryptPayload(string jsonPayload, string base64PublicKey)
+        {
+            byte[] publicKeyBytes = Convert.FromBase64String(base64PublicKey);
+            byte[] payloadBytes = Encoding.UTF8.GetBytes(jsonPayload);
+
+            using var rsa = RSA.Create();
+            rsa.ImportSubjectPublicKeyInfo(publicKeyBytes, out _);
+
+            byte[] encryptedBytes = rsa.Encrypt(payloadBytes, RSAEncryptionPadding.OaepSHA256);
+            return Convert.ToBase64String(encryptedBytes);
+        }
+
     }
 }

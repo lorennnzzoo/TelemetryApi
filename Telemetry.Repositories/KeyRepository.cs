@@ -32,18 +32,20 @@ namespace Telemetry.Repositories
             if (string.IsNullOrWhiteSpace(authToken))
                 return null;
 
-            var industry = context.Keys
-                            .Include(k => k.Industry)
-                            .Where(k => k.AuthKey == authToken)
-                            .Select(k => k.Industry)
-                            .FirstOrDefault();
+            Key key = context.Keys
+                            .Where(k => k.AuthKey == authToken).FirstOrDefault();
 
-
-            if (industry == null)
+            if (key == null)
                 return null;
 
+
+            int industryId = key.IndustryId;
+            
+
+
+
             var station = context.Stations
-                .FirstOrDefault(s => s.IndustryId == industry.Id && s.Id == stationId);
+                .FirstOrDefault(s => s.IndustryId == industryId && s.Id == stationId);
 
             return station;
         }

@@ -6,7 +6,7 @@ using Telemetry.Data.Models;
 using Telemetry.Repositories.Interfaces;
 namespace TelemetryApi.Controllers
 {
-    [Authorize(Roles ="PcbAdmin")]
+    //[Authorize(Roles ="PcbAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class IndustryController : ControllerBase

@@ -7,7 +7,7 @@ using Telemetry.Repositories.Interfaces;
 
 namespace TelemetryApi.Controllers
 {
-    [Authorize(Roles = "PcbAdmin")]
+    //[Authorize(Roles = "PcbAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class StationController : ControllerBase

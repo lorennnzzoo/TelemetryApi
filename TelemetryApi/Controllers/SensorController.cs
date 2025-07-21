@@ -9,7 +9,7 @@ using Sensor = Telemetry.Data.Models.Sensor;
 
 namespace TelemetryApi.Controllers
 {
-    [Authorize(Roles = "PcbAdmin")]
+    //[Authorize(Roles = "PcbAdmin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SensorController : ControllerBase
