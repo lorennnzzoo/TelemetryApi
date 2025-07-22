@@ -30,6 +30,7 @@ builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IStationRepository, StationRepository>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 builder.Services.AddScoped<IKeyRepository, KeyRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
