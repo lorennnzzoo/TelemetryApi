@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Telemetry.Test", "Telemetry
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telemetry.Api.Test", "Telemetry.Api.Test\Telemetry.Api.Test.csproj", "{EEFADC38-EB18-4FAB-8DC3-B71CF3D4F6F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telemetry.SensorDataUploader", "Telemetry.SensorDataUploader\Telemetry.SensorDataUploader.csproj", "{D33DD715-97D8-4B10-8D5F-F09EDCD4D4EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{EEFADC38-EB18-4FAB-8DC3-B71CF3D4F6F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEFADC38-EB18-4FAB-8DC3-B71CF3D4F6F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEFADC38-EB18-4FAB-8DC3-B71CF3D4F6F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D33DD715-97D8-4B10-8D5F-F09EDCD4D4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D33DD715-97D8-4B10-8D5F-F09EDCD4D4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D33DD715-97D8-4B10-8D5F-F09EDCD4D4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D33DD715-97D8-4B10-8D5F-F09EDCD4D4EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{59240066-0B24-4E8F-A9EB-F7582FB6FAEE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{6B4F16BE-F311-45A0-BA80-A6798EDA53AC} = {4DDCAE98-4ADF-4524-830F-C189D54D0ADD}
 		{EEFADC38-EB18-4FAB-8DC3-B71CF3D4F6F9} = {7E8A6505-C1D4-4F21-88CD-61E8CFA3C4AD}
+		{D33DD715-97D8-4B10-8D5F-F09EDCD4D4EE} = {4DDCAE98-4ADF-4524-830F-C189D54D0ADD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E690B8A-2D70-406B-B23C-1239B7A44F46}

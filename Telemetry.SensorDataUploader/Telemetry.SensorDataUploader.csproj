@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-Telemetry.SensorDataUploader-f23f4575-e0b3-4f0a-8bb1-2abd40c1b95a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Telemetry.Business\Telemetry.Business.csproj" />
+    <ProjectReference Include="..\Telemetry.Data\Telemetry.Data.csproj" />
+    <ProjectReference Include="..\Telemetry.Repositories\Telemetry.Repositories.csproj" />
+  </ItemGroup>
+</Project>
