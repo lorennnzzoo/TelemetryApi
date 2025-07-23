@@ -31,6 +31,7 @@ builder.Services.AddScoped<IStationRepository, StationRepository>();
 builder.Services.AddScoped<ISensorRepository, SensorRepository>();
 builder.Services.AddScoped<IKeyRepository, KeyRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
